@@ -1,35 +1,53 @@
 # dpn
-deep predicitve coding networks demo  
-Taichi Iki 2016-06-17
 
-Deep Predictive Coding Networks for Video Prediction and Unsupervised Learning  
-William Lotter, Gabriel Kreiman, David Cox  
+Deep Predictive Coding Networks Demo
+Taichi Iki, 2016-06-17
+
+**Paper Reference:**
+**"Deep Predictive Coding Networks for Video Prediction and Unsupervised Learning"**
+William Lotter, Gabriel Kreiman, David Cox
 [https://arxiv.org/abs/1605.08104](https://arxiv.org/abs/1605.08104)
 
-をとりあえず動かしてみようというサンプルです。  
-KerasやChainerでのモデリングは諦めて、theanoで実装しました。  
-かなり汚いです。
+---
 
-注
-まだ学習・予想という一連の動作が(エラーなく)動くようになったという段階で  
-学習がうまくいった例はありませんが、何か話題や参考になれば幸いです。  
-また、うまくい学習しない理由をわかる方がいましたらぜひ連絡をください。  
+This is a sample implementation just to try running it for now.
+I gave up on modeling with Keras or Chainer and implemented it using Theano instead.
+It’s quite messy.
 
-## 依存
-theano, PIL
+### Note
 
-## dpn_learn.py
-* 画像を学習させる。
-* 学習サンプルはディレクトリ(sample)にまとめて番号を付けて入れておく(0.png, 1.png, 2.pngなど)
-* 数値順にソートしてtimestepごとにわけseqenceとして使います。
-* その他の設定は"if __name__ == '__main__':"以降を参照
-* modelの構築にもかなり時間がかかるので気長に待つ必要があります。
-* 学習が進むと ****.pkl, ****.npzができます。これらが学習したモデルになります。
+At this stage, the full pipeline of training and prediction runs *without errors*,
+but there hasn’t yet been a successful example of effective learning.
+Still, I hope it can serve as a topic of interest or a useful reference.
+Also, if anyone understands why the learning isn't working well, please do reach out.
 
-## dpn_eval.py
-* loadで学習したモデルを読み込む。
-* applyimg(imagepath or matrixdata)で画像を作用させる。
-* matrixdataは3次元のデータで[channel, height, width]です。
-* 各画素値は0.0-1.0に変換しておく必要があります。
+---
 
-以上
+## Dependencies
+
+* Theano
+* PIL (Python Imaging Library)
+
+---
+
+## `dpn_learn.py`
+
+* Trains the model on image data.
+* Training samples should be placed in a directory named `sample`, sequentially numbered (e.g., `0.png`, `1.png`, `2.png`, etc.).
+* Files are sorted numerically and grouped by timestep to form sequences.
+* For other settings, refer to the section below `if __name__ == '__main__':`
+* Model construction takes quite a bit of time, so be patient.
+* As training progresses, files like `****.pkl` and `****.npz` will be generated. These are the trained models.
+
+---
+
+## `dpn_eval.py`
+
+* Loads a trained model using `load`.
+* Applies the model to images using `applyimg(imagepath or matrixdata)`.
+* `matrixdata` should be a 3D array of the format `[channel, height, width]`.
+* Each pixel value must be normalized to the range `0.0 – 1.0`.
+
+---
+
+Let me know if you want help rewriting or modernizing this Theano code to use PyTorch or TensorFlow.
